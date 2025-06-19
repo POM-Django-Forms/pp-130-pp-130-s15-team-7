@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %} Book: '{{ book.name }}' {% endblock %}
+
+
+{% block content %}
+{% if book %}
+<h1>Book: {{ book.name }} </h1>
+<ul>
+    <li>Book name: {{ book.name }}</li>
+    <li>Authors:
+        {% if book.authors.all %}
+                {% for author in book.authors.all %}
+                    {{ author.name }} {% if author.patronymic %}{{ author.patronymic }} {% endif %}{{ author.surname }}
+                {% endfor %}
+        {% else %}
+            <em>No authors listed</em>
+        {% endif %}
+    </li>
+    <li>Description: {{ book.description }}</li>
+    <li>Count of these book: {{ book.count }}pcs</li>
+</ul>
+{% else %}
+<h1>This book doesn't exist.</h1>
+{% endif %}
+
+<a href="{% url 'books-info' %}">Back to list</a>
+{% endblock %}
+
+
+

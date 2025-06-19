@@ -1,0 +1,10 @@
+<h2>User Details</h2>
+<p><strong>Name:</strong> {{ user.first_name }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Role:</strong>
+  {% if user.is_librarian %} Librarian
+  {% elif user.is_guest %} Guest
+  {% else %} Unknown
+  {% endif %}
+</p>
+<a href="{% url 'user_list' %}">Back to all users</a>

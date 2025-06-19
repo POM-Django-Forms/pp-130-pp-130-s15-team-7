@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Info about all books {% endblock %}
+
+{% block content %}
+<h1>Book List</h1>
+<form method="get">
+    <label for="sort">Sort by:</label>
+    <select name="sort" id="sort" onchange="this.form.submit()">
+        <option value="">Choose</option>
+        <option value="name_asc" {% if selected_sort == 'name_asc' %}selected{% endif %}>Name (A-Z)</option>
+        <option value="name_desc" {% if selected_sort == 'name_desc' %}selected{% endif %}>Name (Z-A)</option>
+        <option value="count_asc" {% if selected_sort == 'count_asc' %}selected{% endif %}>Count (ASC)</option>
+        <option value="count_desc" {% if selected_sort == 'count_desc' %}selected{% endif %}>Count (DESC)</option>
+    </select>
+</form>
+
+<hr>
+
+<ul>
+    {% for book in books %}
+    <li>Book name: <a href="{% url 'book-detail' book.id %}">{{ book.name }}</a></li>
+
+        Author:
+        {% if book.authors.all %}
+                {% for author in book.authors.all %}
+                    {{ author.name }} {% if author.patronymic %}{{ author.patronymic }} {% endif %}{{ author.surname }}
+                {% endfor %}
+        {% else %}
+            <em>No authors listed</em>
+        {% endif %}
+
+    {% empty %}
+    <li>No books found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

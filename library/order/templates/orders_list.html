@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Список замовлень</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Користувач</th>
+            <th>Книга</th>
+            <th>Дата створення</th>
+            <th>Планована дата повернення</th>
+            <th>Фактична дата повернення</th>
+            <th>Статус</th>
+            <th>Дія</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order.user.username }}</td>
+            <td>{{ order.book.name }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>{{ order.plated_end_at }}</td>
+            <td>{{ order.end_at|default:"Ще не повернено" }}</td>
+            <td>{{ order.is_active|yesno:"Активне,Закрите" }}</td>
+            <td>
+                {% if order.end_at is None and request.user.is_staff %}
+                    <form method="post" action="{% url 'order-close' order.pk %}">
+                        {% csrf_token %}
+                        <button type="submit">Закрити</button>
+                    </form>
+                {% else %}
+                    ---
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
