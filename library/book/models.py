@@ -19,6 +19,7 @@ class Book(models.Model):
     description = models.CharField(blank=True, max_length=256)
     count = models.IntegerField(default=10)
     id = models.AutoField(primary_key=True)
+    authors = models.ManyToManyField('author.Author', blank=True)
 
     def __str__(self):
         """

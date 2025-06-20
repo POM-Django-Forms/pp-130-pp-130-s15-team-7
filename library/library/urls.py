@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from authentication import views as auth_views
 from author import views as author_views
 
@@ -28,6 +28,9 @@ urlpatterns = [
 
     path('users/', auth_views.user_list, name='user_list'),
     path('users/<int:user_id>/', auth_views.user_detail, name='user_detail'),
+    
+    path('books/', include('book.urls')), 
+    path('orders/', include('order.urls')),
 
     path('authors/', author_views.author_list, name='author_list'),
     path('authors/create/', author_views.author_create, name='author_create'),

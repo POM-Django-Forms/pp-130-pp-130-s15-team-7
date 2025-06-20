@@ -25,7 +25,6 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     end_at = models.DateTimeField(default=None, null=True, blank=True)
     plated_end_at = models.DateTimeField(default=None)
-    is_active = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
         """
@@ -34,8 +33,8 @@ class Order(models.Model):
         """
         if self.end_at == None:
             return f"\'id\': {self.pk}, " \
-                   f"\'user\': CustomUser(id={self.user.pk})," \
-                   f" \'book\': Book(id={self.book.pk})," \
+                   f"\'user\': {self.user.email}," \
+                   f" \'book\': {self.book.name}," \
                    f" \'created_at\': \'{self.created_at}\'," \
                    f" \'end_at\': {self.end_at}," \
                    f" \'plated_end_at\': \'{self.plated_end_at}\'"
